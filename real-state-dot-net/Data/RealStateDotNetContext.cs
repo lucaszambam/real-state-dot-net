@@ -8,5 +8,6 @@ namespace RealStateDotNet.Data
         public RealStateDotNetContext(DbContextOptions<RealStateDotNetContext> options) : base (options) { }
 
         public DbSet<State> State { get; set; }
+        public DbSet<City> City { get; set; }
     }
 }
