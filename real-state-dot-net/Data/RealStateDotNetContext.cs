@@ -9,7 +9,7 @@ namespace RealStateDotNet.Data
 
         public DbSet<State> State { get; set; }
         public DbSet<City> City { get; set; }
-
         public DbSet<Models.Type> Type { get; set; }
+        public DbSet<Person> Person { get; set; }
     }
 }

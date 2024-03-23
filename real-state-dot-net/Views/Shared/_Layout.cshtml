@@ -22,11 +22,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="State" asp-action="Index">State</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="locationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</a>
+                            <div class="dropdown-menu" aria-labelledby="locationDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="State" asp-action="Index">State</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Index">City</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="realStateDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Real State</a>
+                            <div class="dropdown-menu" aria-labelledby="realStateDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Type" asp-action="Index">Type</a>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="City" asp-action="Index">City</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index">Person</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
