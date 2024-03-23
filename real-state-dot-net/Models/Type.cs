@@ -2,16 +2,12 @@
 
 namespace RealStateDotNet.Models
 {
-    public class City
+    public class Type
     {
         [Key]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "is required.")]
-        public string Name { get; set; }
-
-        public string StateAcronym { get; set; }
-
-        public State State { get; set; }
+        public string Description { get; set; }
     }
 }

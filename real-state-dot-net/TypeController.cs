@@ -1,28 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RealStateDotNet.Data;
 using RealStateDotNet.Models;
 
-namespace RealStateDotNet.Controllers
+namespace RealStateDotNet
 {
-    public class CityController : Controller
+    public class TypeController : Controller
     {
         private readonly RealStateDotNetContext _context;
 
-        public CityController(RealStateDotNetContext context)
+        public TypeController(RealStateDotNetContext context)
         {
             _context = context;
         }
 
-        // GET: City
+        // GET: Type
         public async Task<IActionResult> Index()
         {
-            var realStateDotNetContext = _context.City.Include(c => c.State);
-            return View(await realStateDotNetContext.ToListAsync());
+            return View(await _context.Type.ToListAsync());
         }
 
-        // GET: City/Details/5
+        // GET: Type/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -30,43 +33,40 @@ namespace RealStateDotNet.Controllers
                 return NotFound();
             }
 
-            var city = await _context.City
-                .Include(c => c.State)
+            var @type = await _context.Type
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (city == null)
+            if (@type == null)
             {
                 return NotFound();
             }
 
-            return View(city);
+            return View(@type);
         }
 
-        // GET: City/Create
+        // GET: Type/Create
         public IActionResult Create()
         {
-            ViewData["StateAcronym"] = new SelectList(_context.State, "Acronym", "Acronym");
             return View();
         }
 
-        // POST: City/Create
+        // POST: Type/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,StateAcronym")] City city)
+        public async Task<IActionResult> Create([Bind("Id,Description")] Models.Type @type)
         {
             if (ModelState.IsValid)
             {
-                city.Id = Guid.NewGuid();
-                _context.Add(city);
+                @type.Id = Guid.NewGuid();
+                _context.Add(@type);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StateAcronym"] = new SelectList(_context.State, "Acronym", "Acronym", city.StateAcronym);
-            return View(city);
+            return View(@type);
         }
 
-        // GET: City/Edit/5
+        // GET: Type/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -74,23 +74,22 @@ namespace RealStateDotNet.Controllers
                 return NotFound();
             }
 
-            var city = await _context.City.FindAsync(id);
-            if (city == null)
+            var @type = await _context.Type.FindAsync(id);
+            if (@type == null)
             {
                 return NotFound();
             }
-            ViewData["StateAcronym"] = new SelectList(_context.State, "Acronym", "Acronym", city.StateAcronym);
-            return View(city);
+            return View(@type);
         }
 
-        // POST: City/Edit/5
+        // POST: Type/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,StateAcronym")] City city)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description")] Models.Type @type)
         {
-            if (id != city.Id)
+            if (id != @type.Id)
             {
                 return NotFound();
             }
@@ -99,12 +98,12 @@ namespace RealStateDotNet.Controllers
             {
                 try
                 {
-                    _context.Update(city);
+                    _context.Update(@type);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CityExists(city.Id))
+                    if (!TypeExists(@type.Id))
                     {
                         return NotFound();
                     }
@@ -115,11 +114,10 @@ namespace RealStateDotNet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StateAcronym"] = new SelectList(_context.State, "Acronym", "Acronym", city.StateAcronym);
-            return View(city);
+            return View(@type);
         }
 
-        // GET: City/Delete/5
+        // GET: Type/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -127,35 +125,34 @@ namespace RealStateDotNet.Controllers
                 return NotFound();
             }
 
-            var city = await _context.City
-                .Include(c => c.State)
+            var @type = await _context.Type
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (city == null)
+            if (@type == null)
             {
                 return NotFound();
             }
 
-            return View(city);
+            return View(@type);
         }
 
-        // POST: City/Delete/5
+        // POST: Type/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var city = await _context.City.FindAsync(id);
-            if (city != null)
+            var @type = await _context.Type.FindAsync(id);
+            if (@type != null)
             {
-                _context.City.Remove(city);
+                _context.Type.Remove(@type);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CityExists(Guid id)
+        private bool TypeExists(Guid id)
         {
-            return _context.City.Any(e => e.Id == id);
+            return _context.Type.Any(e => e.Id == id);
         }
     }
 }
